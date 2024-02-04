@@ -12,19 +12,19 @@ services:
     volumes:
       - pg_data_production:/var/lib/postgresql/data
   backend:
-    image: mirovata/kittygram_backend
+    image: ${{ secrets.NICKNAME }}/kittygram_backend
     env_file: .env
     volumes:
       - static_volume:/backend_static
       - media_kittygram:/app/media
   frontend:
-    image: mirovata/kittygram_frontend
+    image: ${{ secrets.NICKNAME }}/kittygram_frontend
     env_file: .env
     command: cp -r /app/build/. /frontend_static/
     volumes:
       - static_volume:/frontend_static
   gateway:
-    image: mirovata/kittygram_gateway
+    image: ${{ secrets.NICKNAME }}/kittygram_gateway
     env_file: .env
     volumes:
       - static_volume:/static

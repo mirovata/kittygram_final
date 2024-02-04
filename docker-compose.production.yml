@@ -16,7 +16,7 @@ services:
     env_file: .env
     volumes:
       - static_volume:/backend_static
-      - media_kittygram:/media
+      - media_kittygram:/app/media
   frontend:
     image: mirovata/kittygram_frontend
     env_file: .env
@@ -27,7 +27,7 @@ services:
     image: mirovata/kittygram_gateway
     env_file: .env
     volumes:
-      - static_volume:/staticfiles/
+      - static_volume:/static
       - media_kittygram:/media
     ports:
       - 9000:80

@@ -6,28 +6,37 @@ volumes:
   media_kittygram:
 
 services:
+  
   db:
     image: postgres:13.10
     env_file: .env
     volumes:
       - pg_data_production:/var/lib/postgresql/data
+  
   backend:
-    image: ${{ secrets.NICKNAME }}/kittygram_backend
+    image: mirovata/kittygram_backend
     env_file: .env
     volumes:
       - static_volume:/backend_static
       - media_kittygram:/app/media
+    depends_on:
+      - db
+  
   frontend:
-    image: ${{ secrets.NICKNAME }}/kittygram_frontend
+    image: mirovata/kittygram_frontend
     env_file: .env
     command: cp -r /app/build/. /frontend_static/
     volumes:
       - static_volume:/frontend_static
+  
   gateway:
-    image: ${{ secrets.NICKNAME }}/kittygram_gateway
+    image: mirovata/kittygram_gateway
     env_file: .env
     volumes:
       - static_volume:/static
       - media_kittygram:/media
+    depends_on:
+      - backend
+      - frontend
     ports:
       - 9000:80

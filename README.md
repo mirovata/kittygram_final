@@ -99,3 +99,6 @@ DEBUG-Для отладки.
 ALLOWED_HOSTS-Введите хосты для сайта.
 
 **Пример**:ALLOWED_HOSTS='dom.ru,street.kz'
+
+## Автор
+**Роман Ткаченко** - back-end developer 

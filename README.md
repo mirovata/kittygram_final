@@ -1,26 +1,101 @@
-#  Как работать с репозиторием финального задания
+# Kittygram
+## Бейджик об удачно завершенном workflow
 
-## Что нужно сделать
+[![Main Kittygram workflow](https://github.com/mirovata/kittygram_final/actions/workflows/main.yml/badge.svg)](https://github.com/mirovata/kittygram_final/actions/workflows/main.yml)
 
-Настроить запуск проекта Kittygram в контейнерах и CI/CD с помощью GitHub Actions
+## Описание
+Проект о наших домашних питомцах, вы можете зарегистрироваться и добавлять ваших питомцев, нужно указать имя и год рождения питомца, а так же добавить фотографии и указать его достижения.
+## Технологии
+- Docker
+- Django
+- Python
+- PostgreSQL
+- Gunicorn
+- Javascript
 
-## Как проверить работу с помощью автотестов
+## Как развернуть проект.
 
-В корне репозитория создайте файл tests.yml со следующим содержимым:
-```yaml
-repo_owner: ваш_логин_на_гитхабе
-kittygram_domain: полная ссылка (https://доменное_имя) на ваш проект Kittygram
-taski_domain: полная ссылка (https://доменное_имя) на ваш проект Taski
-dockerhub_username: ваш_логин_на_докерхабе
+Клонировать репозиторий:
+
+```
+git@github.com:mirovata/kittygram_final.git
+```
+Создать и заполнить .env.Как заполнить с примерами ниже
+
+C главной директории перейдите в папку backend и введите комманду.
+
+```
+cd backend
+```
+```
+Docker build -t (ИМЯ ВАШЕГО БИЛДА) .
 ```
 
-Скопируйте содержимое файла `.github/workflows/main.yml` в файл `kittygram_workflow.yml` в корневой директории проекта.
+C главной директории перейдите в папку frontend и введите комманду.
 
-Для локального запуска тестов создайте виртуальное окружение, установите в него зависимости из backend/requirements.txt и запустите в корневой директории проекта `pytest`.
+```
+cd frontend
+```
+```
+Docker build -t (ИМЯ ВАШЕГО БИЛДА) .
+```
 
-## Чек-лист для проверки перед отправкой задания
+C главной директории перейдите в папку nginx и введите комманду.
 
-- Проект Taski доступен по доменному имени, указанному в `tests.yml`.
-- Проект Kittygram доступен по доменному имени, указанному в `tests.yml`.
-- Пуш в ветку main запускает тестирование и деплой Kittygram, а после успешного деплоя вам приходит сообщение в телеграм.
-- В корне проекта есть файл `kittygram_workflow.yml`.
+```
+cd ngingx
+```
+```
+Docker build -t (ИМЯ ВАШЕГО БИЛДА) .
+```
+В главной директории запустите docker compose.
+
+```
+docker compose up
+```
+Для полноценной работы соберите статику бэкенда.
+
+```
+docker compose exec backend python manage.py collectstatic
+```
+```
+docker compose exec backend cp -r /app/collected_static/. /backend_static/static/
+```
+
+Чтобы завершить программу введите.
+
+```
+docker compose down
+```
+## Как заполнить .env
+SECRET_KEY-Нужно указать секретный ключ для django.
+
+**Пример**:SECRET_KEY='qolwvjicds5p53gvod1pyrz*%2uykjw&a^&c4moab!w=&16ou7' 
+
+POSTGRES_DB-Нужно вести имя базы данных.
+
+**Пример**:POSTGRES_DB=kitty
+
+POSTGRES_USER-Нужно ввести имя пользоватя.
+
+**Пример**:POSTGRES_USER=user
+
+POSTGRES_PASSWORD-Нужно ввести пароль для базы данных.
+
+**Пример**:POSTGRES_PASSWORD=123456
+
+DB_PORT-Порт, по которому Django будет обращаться к базе данных.
+
+**Пример**:DB_PORT=5432
+
+DB_HOST-Адрес, по которому Django будет соединяться с базой данных.
+
+**Пример**:DB_HOST=db
+
+DEBUG-Для отладки.
+
+**Пример**:DEBUG='True'
+
+ALLOWED_HOSTS-Введите хосты для сайта.
+
+**Пример**:ALLOWED_HOSTS='dom.ru,street.kz'
